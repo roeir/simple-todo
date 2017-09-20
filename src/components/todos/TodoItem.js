@@ -42,18 +42,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const TodoItem = ({ id, text, completed, onToggleItem, onRemove }) => {
+const TodoItem = ({ todo, onToggleItem, onRemove }) => {
+  const { id, text, complete } = todo;
   return (
     <View style={styles.container}>
       <Switch
         style={styles.toggler}
-        onValueChange={onToggleItem(id)}
-        value={completed}
+        onValueChange={() => { onToggleItem(todo) }}
+        value={complete}
       />
       <Text
-        style={[styles.text, completed && styles.itemCompleted]}
+        style={[styles.text, complete && styles.itemCompleted]}
       >{ text }</Text>
-      <TouchableOpacity style={styles.removeContainer} onPress={onRemove(id)}>
+      <TouchableOpacity style={styles.removeContainer} onPress={() => { onRemove(id) }}>
         <Text style={styles.removeBtn}>✖</Text>
       </TouchableOpacity>
     </View>

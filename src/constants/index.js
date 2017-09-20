@@ -1,0 +1,7 @@
+export const TODO_ADD_REQUEST = 'TODO_ADD_REQUEST';
+export const TODO_ADD_SUCCES = 'TODO_ADD_SUCCES';
+export const TODO_TOGGLE = 'TODO_TOGGLE';
+export const TODO_REMOVE = 'TODO_REMOVE';
+export const TODO_ADD_FAILURE = 'TODO_ADD_FAILURE';
+
+export const TODOS_FETCH_SUCCESS = 'TODOS_FETCH_SUCCESS';

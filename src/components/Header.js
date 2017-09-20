@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { connect } from 'react-redux';
+
+import { addTodo } from '../actions/todo';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,22 +28,41 @@ const styles = StyleSheet.create({
   },
 });
 
-const Header = ({value, onSumbit, onChange, onToggleAllComplete}) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onToggleAllComplete}>
-        <Text style={styles.toggleAll}>✔</Text>
-      </TouchableOpacity>
-      <TextInput
-        style={styles.input}
-        placeholder="What do you want?"
-        returnKeyType="done"
-        value={value}
-        onSubmitEditing={onSumbit}
-        onChangeText={onChange}
-      />
-    </View>
-  );
-};
+class Header extends Component {
+  state = {
+    text: ''
+  };
 
-export default Header;
+  handleInputChange = text =>
+    this.setState({ text });
+
+  handleSubmit = () => {
+    const { text } = this.state;
+    if (!text.length) return;
+    this.props.addTodo({ text, complete: false, })
+      .then(() => this.setState({ text: '' }));
+  };
+
+  render() {
+    const { text } = this.state;
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity>
+          <Text style={styles.toggleAll}>✔</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="What do you want?"
+          returnKeyType="done"
+          value={text}
+          onChangeText={this.handleInputChange}
+          onSubmitEditing={this.handleSubmit}
+        />
+      </View>
+    );
+  }
+}
+export default connect(
+  null,
+  { addTodo }
+)(Header);

@@ -3,16 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
+  FlatList
 } from 'react-native';
 
 import TodoItem from './TodoItem';
 
 const styles = StyleSheet.create({
-  list: {
-    backgroundColor: '#fff',
-    flex: 1,
-  },
   separator: {
     width: '100%',
     height: 1,
@@ -20,22 +16,20 @@ const styles = StyleSheet.create({
   },
 });
 
-const TodoList = ({ items, onToggleItem, onRemove }) => {
+const TodoList = ({ todos, onToggle, onRemove }) => {
   return (
-    <View style={styles.list}>
-      <FlatList
-        data={items}
-        keyExtractor={item => item.id}
-        renderItem={({item}) =>
-          <TodoItem
-            { ...item }
-            onToggleItem={onToggleItem}
-            onRemove={onRemove}
-          />
-        }
-        ItemSeparatorComponent={() => <View style={styles.separator}/>}
-      />
-    </View>
+    <FlatList
+      data={todos}
+      keyExtractor={item => item.id}
+      renderItem={({item}) =>
+        <TodoItem
+          todo={item}
+          onToggleItem={onToggle}
+          onRemove={onRemove}
+        />
+      }
+      ItemSeparatorComponent={() => <View style={styles.separator}/>}
+    />
   );
 };
 
